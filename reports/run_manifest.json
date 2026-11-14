@@ -1,0 +1,63 @@
+{
+  "run_id": "2026-11-14T09-53-49Z",
+  "mode": "bootstrap",
+  "started_at": "2026-11-14T09:53:49Z",
+  "completed_at": "2026-11-14T09:59:00Z",
+  "final_state": "ready_awaiting_first_launch_human_approval",
+  "repository": "adityac31blr-ctrl/jtrack",
+  "branch": "bootstrap/jobs-radar",
+  "sources_attempted": [
+    {
+      "key": "himalayas",
+      "status": "ok",
+      "requests": 16,
+      "records_received": 320,
+      "unique_candidates": 269
+    }
+  ],
+  "sources_not_attempted": [
+    {
+      "key": "greenhouse",
+      "reason": "No verified employer board tokens configured"
+    },
+    {
+      "key": "lever",
+      "reason": "No verified employer site IDs configured"
+    }
+  ],
+  "counts": {
+    "fetched_unique": 269,
+    "accepted": 237,
+    "rejected": 32,
+    "added": 237,
+    "removed": 0
+  },
+  "qa_decision": "pass",
+  "publication_allowed_by_qa": true,
+  "published_snapshot": {
+    "generated_at": "2026-11-14T09:53:59Z",
+    "jobs": 237,
+    "deployment_status": "not_deployed"
+  },
+  "ci": {
+    "run_id": 43583073225,
+    "commit": "5392057875e8d8eddaf6f26f40c4691122dfe777",
+    "status": "success",
+    "jobs_passed": [
+      "test",
+      "browser-fixture",
+      "browser-approved-data",
+      "live-release-gate"
+    ]
+  },
+  "remaining_gates": ["explicit first-launch human approval"],
+  "artifact_sha256": {
+    "pipeline/sources.json": "6fc9b8e87376016d57fd4a0b2a85090afb679a7125333310557c549fcedb0ac5",
+    "pipeline/fetch_jobs.py": "49d0795b2fd5adc1bffab4ea90d711ea7be3c235a18b455f61a4a2bfab491db6",
+    "pipeline/validate_jobs.py": "1afa097af04b4558f9d5a15af9ab291e78a421a54e1b0da65f63be51a47321fa",
+    "index.html": "ba7e8da5aaa79e1852100696ee5b5aee0578557ab5d768100d498f292e707a0d",
+    "styles.css": "2922b963c812e0c17b4b38865a66ec418a6328f3ee8cd5c04b80ecddf1c66718",
+    "app.js": "866ce1ddf62027c95dbdde761bd7094e7057144b5847c1733fba5ee35fd554de",
+    "data/jobs.json": "8b02e79f00047911dc1264520c1f723668cfb1af3889a08f2966eceb12359242"
+  }
+}

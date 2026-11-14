@@ -1,0 +1,94 @@
+name: Quality gates
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run deterministic tests
+        run: python -m unittest discover -s tests -v
+      - name: Validate committed snapshot
+        run: |
+          python -m json.tool data/jobs.json >/dev/null
+          python - <<'PY'
+          import json
+          from pipeline.validate_jobs import schema_errors
+          value = json.load(open("data/jobs.json", encoding="utf-8"))
+          errors = schema_errors(value)
+          if errors:
+              raise SystemExit("schema errors: " + ", ".join(errors[:20]))
+          PY
+      - name: Enforce static asset budget
+        run: test $(wc -c < index.html) -lt 102400 && test $(wc -c < styles.css) -lt 102400 && test $(wc -c < app.js) -lt 102400
+
+  browser-fixture:
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v1.56.1-noble
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install browser runner
+        run: npm install --no-save playwright@1.56.1
+      - name: Serve isolated fixture
+        run: |
+          cp tests/fixtures/data/jobs.json data/jobs.json
+          python3 -m http.server 8765 >/tmp/jobs-radar-http.log 2>&1 &
+          for attempt in 1 2 3 4 5; do curl -fsS http://127.0.0.1:8765/ >/dev/null && break; sleep 1; done
+      - name: Test mobile and desktop interactions
+        run: node tests/ui_test.mjs
+
+  live-release-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fetch approved live sources
+        id: fetch
+        continue-on-error: true
+        run: python pipeline/fetch_jobs.py --config pipeline/sources.json --out staging/research_jobs.json --report reports/research_report.json
+      - name: Run automated release judge
+        id: qa
+        if: steps.fetch.outcome == 'success'
+        continue-on-error: true
+        run: python pipeline/validate_jobs.py --in staging/research_jobs.json --out staging/validated_jobs.json --report reports/qa_report.json --rejected reports/rejected_jobs.json --previous data/jobs.json
+      - name: Upload research and QA artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-release-${{ github.run_id }}
+          path: |
+            reports/*.json
+            staging/research_jobs.json
+            staging/validated_jobs.json
+          if-no-files-found: warn
+      - name: Enforce release decision
+        if: always()
+        run: test '${{ steps.fetch.outcome }}' = success && test '${{ steps.qa.outcome }}' = success
+
+  browser-approved-data:
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v1.56.1-noble
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install browser runner
+        run: npm install --no-save playwright@1.56.1
+      - name: Serve approved snapshot
+        run: |
+          python3 -m http.server 8765 >/tmp/jobs-radar-http.log 2>&1 &
+          for attempt in 1 2 3 4 5; do curl -fsS http://127.0.0.1:8765/ >/dev/null && break; sleep 1; done
+      - name: Test approved data at mobile and desktop sizes
+        run: node tests/live_ui_test.mjs
+

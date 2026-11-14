@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2020-01-01T00:00:00Z",
+  "scope": { "default_country": "IN", "include_india_eligible_remote": true, "marketing_priority": true },
+  "sources": [
+    { "key": "fixture_himalayas", "name": "Himalayas test fixture", "status": "partial", "fetched_at": "2020-01-01T00:00:00Z", "records_received": 2, "records_published": 2, "attribution_url": "https://himalayas.app" }
+  ],
+  "stats": { "total": 2, "marketing": 1, "new_last_7_days": 0, "sources_ok": 0 },
+  "jobs": [
+    {
+      "id": "fixture:marketing-1", "source_key": "fixture_himalayas", "source_job_id": "marketing-1", "source_name": "Himalayas test fixture",
+      "title": "Fixture Growth Associate", "company": "Fixture Company", "function": "Marketing", "marketing_priority_score": 90,
+      "location_text": "Remote - India eligible", "country": "IN", "india_eligible": true, "work_mode": "remote", "experience_level": "entry", "employment_type": "full_time",
+      "salary": { "min": null, "max": null, "currency": null, "period": null }, "posted_at": null, "expires_at": null,
+      "summary": "Synthetic test-only role used to verify search and null date handling.", "skills": ["Growth", "Research"],
+      "application_url": "https://himalayas.app/test-fixture/apply", "source_url": "https://himalayas.app/test-fixture/listing", "last_checked_at": "2020-01-01T00:00:00Z", "availability_status": "source_listed"
+    },
+    {
+      "id": "fixture:finance-1", "source_key": "fixture_himalayas", "source_job_id": "finance-1", "source_name": "Himalayas test fixture",
+      "title": "Fixture Finance Analyst", "company": "Fixture Company Two", "function": "Finance", "marketing_priority_score": 20,
+      "location_text": "Mumbai", "country": "IN", "india_eligible": true, "work_mode": "hybrid", "experience_level": "unknown", "employment_type": "full_time",
+      "salary": { "min": 500000, "max": 700000, "currency": "INR", "period": "annual" }, "posted_at": "2019-12-30T00:00:00Z", "expires_at": null,
+      "summary": "Synthetic test-only role used to verify filters and salary formatting.", "skills": ["Finance"],
+      "application_url": "https://himalayas.app/test-fixture/apply-two", "source_url": "https://himalayas.app/test-fixture/listing-two", "last_checked_at": "2020-01-01T00:00:00Z", "availability_status": "source_listed"
+    }
+  ]
+}

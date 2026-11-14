@@ -1,0 +1,18 @@
+{
+  "run_id": "2026-11-14T10-00-46Z",
+  "decision": "pass",
+  "input_records": 265,
+  "accepted_records": 235,
+  "rejected_records": 30,
+  "duplicate_records": 0,
+  "warning_records": 30,
+  "source_failures": [],
+  "blockers": [],
+  "warnings": [],
+  "schema_errors": [],
+  "changes_since_previous": {
+    "added": 14,
+    "removed": 16
+  },
+  "validated_file": "staging/validated_jobs.json"
+}

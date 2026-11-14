@@ -1,0 +1,23 @@
+{
+  "run_id": "2026-11-14T10-00-46Z",
+  "started_at": "2026-11-14T10:00:46Z",
+  "completed_at": "2026-11-14T10:00:54Z",
+  "request_count": 16,
+  "candidate_records": 265,
+  "successful_sources": 1,
+  "sources": [
+    {
+      "key": "himalayas",
+      "name": "Himalayas",
+      "status": "ok",
+      "requests": 16,
+      "records_received": 320,
+      "errors": [],
+      "fetched_at": "2026-11-14T10:00:53Z",
+      "documentation_url": "https://himalayas.app/docs/remote-jobs-api",
+      "attribution_url": "https://himalayas.app",
+      "paging_truncated": true
+    }
+  ],
+  "paging_truncated": true
+}
