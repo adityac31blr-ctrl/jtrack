@@ -1,5 +1,5 @@
 {
-  "run_id": "2026-11-14T09-53-49Z",
+  "run_id": "2026-11-14T10-00-46Z",
   "rejected": [
     {
       "source_key": "himalayas",
@@ -137,20 +137,6 @@
     {
       "source_key": "himalayas",
       "source_job_id": "https://himalayas.app/companies/cloudspot-gmbh/jobs/sales-development-representative-sdr-bdr",
-      "reasons": [
-        "india_eligibility_unknown"
-      ]
-    },
-    {
-      "source_key": "himalayas",
-      "source_job_id": "https://himalayas.app/companies/daytech-gifts/jobs/cold-email-lead-generation-specialist",
-      "reasons": [
-        "india_eligibility_unknown"
-      ]
-    },
-    {
-      "source_key": "himalayas",
-      "source_job_id": "https://himalayas.app/companies/keepgo/jobs/b2b-sales-closer-saas",
       "reasons": [
         "india_eligibility_unknown"
       ]
