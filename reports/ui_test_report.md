@@ -19,8 +19,8 @@ The fixture is synthetic and test-only. It must never be copied to production `d
 - JavaScript syntax check: pass
 - Fixture JSON parse: pass
 - HTTP same-origin load: pass
-- Chromium mobile/desktop interaction run: pending rerun in the supported Playwright CI container; the first Ubuntu 26.04 runner attempt failed because Playwright 1.56 does not support that host image
-- Approved real-data integration: Data Quality approved 237 live records; the browser smoke test is pending the supported-container rerun
+- Chromium mobile/desktop interaction run: pass in the supported Playwright container at 360 x 800 and 1280 x 900
+- Approved real-data integration: pass against the Data Quality-approved 237-record snapshot at both viewports
 
 ## Browser suite coverage
 
@@ -28,4 +28,4 @@ The committed Playwright suite checks 360 px and 1280 px viewports, search, zero
 
 ## Known issues
 
-No application defect was found by the completed checks. The approved snapshot is integrated; first-launch publication remains gated until the browser suite passes and the user approves the launch.
+No application defect was found by the completed checks. The approved snapshot is integrated and the browser suite passes; first-launch publication remains gated only on user approval.

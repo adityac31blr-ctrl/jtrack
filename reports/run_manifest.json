@@ -2,8 +2,8 @@
   "run_id": "2026-11-14T09-53-49Z",
   "mode": "bootstrap",
   "started_at": "2026-11-14T09:53:49Z",
-  "completed_at": "2026-11-14T09:55:36Z",
-  "final_state": "qa_pass_awaiting_browser_and_human_approval",
+  "completed_at": "2026-11-14T09:59:00Z",
+  "final_state": "ready_awaiting_first_launch_human_approval",
   "repository": "adityac31blr-ctrl/jtrack",
   "branch": "bootstrap/jobs-radar",
   "sources_attempted": [
@@ -39,10 +39,18 @@
     "jobs": 237,
     "deployment_status": "not_deployed"
   },
-  "remaining_gates": [
-    "browser integration in supported Playwright container",
-    "explicit first-launch human approval"
-  ],
+  "ci": {
+    "run_id": 43583073225,
+    "commit": "5392057875e8d8eddaf6f26f40c4691122dfe777",
+    "status": "success",
+    "jobs_passed": [
+      "test",
+      "browser-fixture",
+      "browser-approved-data",
+      "live-release-gate"
+    ]
+  },
+  "remaining_gates": ["explicit first-launch human approval"],
   "artifact_sha256": {
     "pipeline/sources.json": "6fc9b8e87376016d57fd4a0b2a85090afb679a7125333310557c549fcedb0ac5",
     "pipeline/fetch_jobs.py": "49d0795b2fd5adc1bffab4ea90d711ea7be3c235a18b455f61a4a2bfab491db6",
