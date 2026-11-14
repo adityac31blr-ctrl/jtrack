@@ -1,0 +1,34 @@
+name: Quality gates
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run deterministic tests
+        run: python -m unittest discover -s tests -v
+      - name: Validate committed snapshot
+        run: |
+          python -m json.tool data/jobs.json >/dev/null
+          python - <<'PY'
+          import json
+          from pipeline.validate_jobs import schema_errors
+          value = json.load(open("data/jobs.json", encoding="utf-8"))
+          errors = schema_errors(value)
+          if errors:
+              raise SystemExit("schema errors: " + ", ".join(errors[:20]))
+          PY
+      - name: Enforce static asset budget
+        run: test $(wc -c < index.html) -lt 102400 && test $(wc -c < styles.css) -lt 102400 && test $(wc -c < app.js) -lt 102400
+

@@ -1,0 +1,56 @@
+{
+  "run_id": "2026-11-14T09-42-47Z",
+  "mode": "bootstrap",
+  "started_at": "2026-11-14T09:42:47Z",
+  "completed_at": "2026-11-14T09:48:38Z",
+  "final_state": "blocked_not_published",
+  "repository": "adityac31blr-ctrl/jtrack",
+  "branch": "bootstrap/jobs-radar",
+  "sources_attempted": [
+    {
+      "key": "himalayas",
+      "status": "failed",
+      "requests": 8,
+      "records_fetched": 0,
+      "failure": "HTTPS CONNECT proxy returned 403 before a provider response was received"
+    }
+  ],
+  "sources_not_attempted": [
+    {
+      "key": "greenhouse",
+      "reason": "No verified employer board tokens configured"
+    },
+    {
+      "key": "lever",
+      "reason": "No verified employer site IDs configured"
+    }
+  ],
+  "counts": {
+    "fetched": 0,
+    "accepted": 0,
+    "rejected": 0,
+    "added": 0,
+    "removed": 0
+  },
+  "qa_decision": "block",
+  "publication_allowed": false,
+  "published_snapshot": {
+    "generated_at": "2026-11-14T09:42:00Z",
+    "jobs": 0,
+    "deployment_status": "not_deployed"
+  },
+  "blockers": [
+    "zero_verifiably_successful_sources",
+    "browser_integration_requires_available Chromium and approved real data"
+  ],
+  "approval_required": "First launch requires human approval after blockers are resolved",
+  "artifact_sha256": {
+    "pipeline/sources.json": "6fc9b8e87376016d57fd4a0b2a85090afb679a7125333310557c549fcedb0ac5",
+    "pipeline/fetch_jobs.py": "49d0795b2fd5adc1bffab4ea90d711ea7be3c235a18b455f61a4a2bfab491db6",
+    "pipeline/validate_jobs.py": "1afa097af04b4558f9d5a15af9ab291e78a421a54e1b0da65f63be51a47321fa",
+    "index.html": "ba7e8da5aaa79e1852100696ee5b5aee0578557ab5d768100d498f292e707a0d",
+    "styles.css": "2922b963c812e0c17b4b38865a66ec418a6328f3ee8cd5c04b80ecddf1c66718",
+    "app.js": "866ce1ddf62027c95dbdde761bd7094e7057144b5847c1733fba5ee35fd554de",
+    "data/jobs.json": "a95364e9daf6dd49b475f4d7123fd97a02c157f2c543cf5979453ebef962cc9d"
+  }
+}

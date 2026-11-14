@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+staging/raw/*.json
+staging/research_jobs.json
+staging/validated_jobs.json
+reports/*.json
+!reports/.gitkeep
+!reports/qa_report.json
+!reports/rejected_jobs.json
+!reports/research_report.json
+!reports/run_manifest.json

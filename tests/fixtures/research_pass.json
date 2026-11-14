@@ -1,0 +1,39 @@
+{
+  "run_id": "fixture-pass",
+  "fetched_at": "2026-11-14T09:30:00Z",
+  "sources": [
+    {
+      "key": "himalayas",
+      "name": "Himalayas",
+      "status": "ok",
+      "fetched_at": "2026-11-14T09:30:00Z",
+      "records_received": 1,
+      "attribution_url": "https://himalayas.app"
+    }
+  ],
+  "jobs": [
+    {
+      "source_key": "himalayas",
+      "source_name": "Himalayas",
+      "source_job_id": "fixture-1",
+      "raw_payload_ref": "tests/fixtures/raw.json",
+      "title": "Growth Marketing Associate",
+      "company": "Fixture Company",
+      "location_raw": "Remote",
+      "location_restrictions": ["Worldwide"],
+      "timezone_restrictions": [],
+      "description_raw": "Support campaigns and market research.",
+      "application_url_raw": "https://himalayas.app/jobs/fixture/apply",
+      "source_url_raw": "https://himalayas.app/jobs/fixture",
+      "published_raw": "2026-11-14T08:00:00Z",
+      "published_semantics": "provider_last_updated",
+      "expires_raw": null,
+      "employment_type_raw": "Full Time",
+      "salary_raw": null,
+      "provider_payload": {
+        "applicationLink": "https://himalayas.app/jobs/fixture/apply"
+      },
+      "fetched_at": "2026-11-14T09:30:00Z"
+    }
+  ]
+}

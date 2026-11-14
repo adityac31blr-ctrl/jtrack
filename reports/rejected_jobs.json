@@ -1,0 +1,6 @@
+{
+  "run_id": "2026-11-14T09-42-47Z",
+  "input_records": 0,
+  "rejected": [],
+  "note": "No provider records reached Data Quality. The source failure is recorded as a release blocker, not as zero available jobs."
+}

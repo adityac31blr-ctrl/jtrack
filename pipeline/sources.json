@@ -1,0 +1,44 @@
+{
+  "scope": {
+    "country": "IN",
+    "include_india_eligible_remote": true,
+    "max_published_jobs": 500
+  },
+  "http": {
+    "timeout_seconds": 25,
+    "max_attempts": 3,
+    "user_agent": "JobsRadar/1.0 (+https://github.com/adityac31blr-ctrl/jtrack)"
+  },
+  "sources": {
+    "himalayas": {
+      "enabled": true,
+      "endpoint": "https://himalayas.app/jobs/api/search",
+      "documentation_url": "https://himalayas.app/docs/remote-jobs-api",
+      "attribution_url": "https://himalayas.app",
+      "keywords": [
+        "marketing",
+        "growth marketing",
+        "sales",
+        "business development",
+        "business analyst",
+        "finance",
+        "human resources",
+        "operations"
+      ],
+      "max_pages_per_keyword": 2,
+      "request_interval_seconds": 0.35
+    },
+    "greenhouse": {
+      "enabled": false,
+      "endpoint_template": "https://boards-api.greenhouse.io/v1/boards/{board_token}/jobs?content=true",
+      "documentation_url": "https://developers.greenhouse.io/job-board.html",
+      "boards": []
+    },
+    "lever": {
+      "enabled": false,
+      "endpoint_template": "https://api.lever.co/v0/postings/{site}?mode=json",
+      "documentation_url": "https://github.com/lever/postings-api",
+      "sites": []
+    }
+  }
+}

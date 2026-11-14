@@ -1,0 +1,63 @@
+{
+  "run_id": "2026-11-14T09-46-32Z",
+  "started_at": "2026-11-14T09:46:32Z",
+  "completed_at": "2026-11-14T09:46:58Z",
+  "request_count": 8,
+  "candidate_records": 0,
+  "successful_sources": 0,
+  "sources": [
+    {
+      "key": "himalayas",
+      "name": "Himalayas",
+      "status": "failed",
+      "requests": 8,
+      "records_received": 0,
+      "errors": [
+        {
+          "keyword": "marketing",
+          "page": 1,
+          "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+        },
+        {
+          "keyword": "growth marketing",
+          "page": 1,
+          "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+        },
+        {
+          "keyword": "sales",
+          "page": 1,
+          "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+        },
+        {
+          "keyword": "business development",
+          "page": 1,
+          "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+        },
+        {
+          "keyword": "business analyst",
+          "page": 1,
+          "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+        },
+        {
+          "keyword": "finance",
+          "page": 1,
+          "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+        },
+        {
+          "keyword": "human resources",
+          "page": 1,
+          "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+        },
+        {
+          "keyword": "operations",
+          "page": 1,
+          "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+        }
+      ],
+      "fetched_at": null,
+      "documentation_url": "https://himalayas.app/docs/remote-jobs-api",
+      "attribution_url": "https://himalayas.app"
+    }
+  ],
+  "paging_truncated": false
+}

@@ -1,0 +1,36 @@
+name: Refresh job research
+
+on:
+  schedule:
+    - cron: "23 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  research-and-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fetch approved feeds
+        run: python pipeline/fetch_jobs.py --config pipeline/sources.json --out staging/research_jobs.json --report reports/research_report.json
+      - name: Run Data Quality gate
+        run: python pipeline/validate_jobs.py --in staging/research_jobs.json --out staging/validated_jobs.json --report reports/qa_report.json --rejected reports/rejected_jobs.json --previous data/jobs.json
+      - name: Verify publication candidate
+        run: python pipeline/publish_jobs.py --validated staging/validated_jobs.json --qa-report reports/qa_report.json --destination data/jobs.json
+      - name: Upload reviewed artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jobs-radar-${{ github.run_id }}
+          path: |
+            data/jobs.json
+            reports/*.json
+            staging/validated_jobs.json
+          if-no-files-found: error
+

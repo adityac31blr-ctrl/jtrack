@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-11-14T09:42:00Z",
+  "scope": {
+    "default_country": "IN",
+    "include_india_eligible_remote": true,
+    "marketing_priority": true
+  },
+  "sources": [
+    {
+      "key": "himalayas",
+      "name": "Himalayas",
+      "status": "failed",
+      "fetched_at": null,
+      "records_received": 0,
+      "records_published": 0,
+      "attribution_url": "https://himalayas.app"
+    }
+  ],
+  "stats": {
+    "total": 0,
+    "marketing": 0,
+    "new_last_7_days": 0,
+    "sources_ok": 0
+  },
+  "jobs": []
+}

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Current business roles for MBA and PGDM students in India, gathered from permitted public job feeds.">
+  <title>Jobs Radar</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#jobs">Skip to listings</a>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <div>
+        <p class="brand">Jobs Radar</p>
+        <p class="subtitle">Opportunities for MBA/PGDM students</p>
+      </div>
+      <p class="freshness" id="freshness">Checking listing freshness…</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="search-band" aria-labelledby="search-heading">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">India and India-eligible remote roles</p>
+            <h1 id="search-heading">Find a business role</h1>
+          </div>
+          <p class="scope-note">Listings are sourced from public feeds. Availability is confirmed on the original posting.</p>
+        </div>
+
+        <form class="search-form" id="search-form" role="search">
+          <label class="sr-only" for="search-input">Search listings</label>
+          <input id="search-input" name="search" type="search" autocomplete="off" placeholder="Search job title, company, skill, or city">
+          <button class="button button-secondary" id="clear-search" type="button">Clear</button>
+        </form>
+
+        <div class="notice-stack" id="notices" aria-live="polite"></div>
+
+        <dl class="summary-strip" aria-label="Snapshot summary">
+          <div><dt>Available listings</dt><dd id="stat-total">—</dd></div>
+          <div><dt>Marketing-related</dt><dd id="stat-marketing">—</dd></div>
+          <div><dt>Added in last 7 days</dt><dd id="stat-new">—</dd></div>
+          <div><dt>Sources reporting</dt><dd id="stat-sources">—</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="workspace shell" aria-label="Job search controls and results">
+      <form class="filters" id="filters-form">
+        <div class="filter-field">
+          <label for="filter-function">Function</label>
+          <select id="filter-function" name="function"><option value="">All functions</option></select>
+        </div>
+        <div class="filter-field">
+          <label for="filter-mode">Work mode</label>
+          <select id="filter-mode" name="mode"><option value="">All modes</option></select>
+        </div>
+        <div class="filter-field">
+          <label for="filter-location">Location</label>
+          <select id="filter-location" name="location"><option value="">All locations</option></select>
+        </div>
+        <div class="filter-field">
+          <label for="filter-experience">Experience</label>
+          <select id="filter-experience" name="experience"><option value="">All levels</option></select>
+        </div>
+        <div class="filter-field">
+          <label for="filter-source">Source</label>
+          <select id="filter-source" name="source"><option value="">All sources</option></select>
+        </div>
+        <button class="button button-quiet reset-button" id="reset-filters" type="button">Reset filters</button>
+      </form>
+
+      <div class="results-toolbar">
+        <p id="results-count" role="status" aria-live="polite">Loading listings…</p>
+        <div class="sort-field">
+          <label for="sort-order">Sort</label>
+          <select id="sort-order">
+            <option value="marketing">Marketing priority</option>
+            <option value="recent">Most recent</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="loading-state" class="state-panel" role="status">
+        <span class="loading-mark" aria-hidden="true"></span>
+        Loading current listings…
+      </div>
+
+      <div id="error-state" class="state-panel state-error" hidden>
+        <h2>Listings could not be loaded</h2>
+        <p>There may be a temporary connection or data issue. The last published file has not been changed.</p>
+        <button class="button button-primary" id="retry-load" type="button">Retry</button>
+      </div>
+
+      <div id="empty-state" class="state-panel" hidden>
+        <h2 id="empty-title">No listings match these filters</h2>
+        <p id="empty-copy">Try a broader search or reset the filters.</p>
+        <button class="button button-primary" id="empty-reset" type="button">Reset search and filters</button>
+      </div>
+
+      <div class="job-list" id="jobs" aria-label="Job listings"></div>
+      <div class="load-more-row">
+        <button class="button button-secondary" id="load-more" type="button" hidden>Load more</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <p><strong>About this data</strong><br>Listings are gathered from permitted public job feeds and marked <span class="nowrap">source-listed</span>, not employer-confirmed.</p>
+      <p>Job availability can change. Review the original source before applying. Jobs Radar does not collect application information.</p>
+    </div>
+  </footer>
+</body>
+</html>
