@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 from pipeline.fetch_jobs import map_himalayas
-from pipeline.validate_jobs import india_eligibility, plain_text, schema_errors, valid_https, validate
+from pipeline.validate_jobs import employment, experience, india_eligibility, plain_text, schema_errors, valid_https, validate, work_mode
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,6 +22,20 @@ class ValidationTests(unittest.TestCase):
     def test_india_eligibility_does_not_match_preposition_in(self):
         eligible, _ = india_eligibility({"source_key": "greenhouse:fixture", "location_raw": "Based in London"})
         self.assertIsNone(eligible)
+
+    def test_remote_title_is_not_marked_onsite(self):
+        self.assertEqual(work_mode("Python Finance Developer (100% Remote) Berlin"), "remote")
+
+    def test_location_without_mode_evidence_is_unknown(self):
+        self.assertEqual(work_mode("Bengaluru, India"), "unknown")
+
+    def test_international_does_not_mean_intern(self):
+        self.assertEqual(experience("SEO & GEO Manager"), "mid")
+        self.assertEqual(employment(None, "International Account Executive"), "unknown")
+
+    def test_explicit_intern_is_preserved(self):
+        self.assertEqual(experience("Marketing Intern"), "intern")
+        self.assertEqual(employment(None, "Marketing Internship"), "internship")
 
     def test_schema_rejects_missing_top_level_contract(self):
         errors = schema_errors({"schema_version": "1.0", "jobs": [], "sources": [], "stats": {}})
@@ -64,3 +78,4 @@ class ValidationTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
