@@ -101,33 +101,37 @@ def classify(text: str) -> str:
     return "Other"
 
 
-def experience(text: str) -> str:
-    lowered = text.lower()
-    if any(term in lowered for term in ("intern", "trainee")):
+def contains_term(text: str, terms: tuple[str, ...]) -> bool:
+    return any(re.search(rf"(?<!\w){re.escape(term)}(?!\w)", text) for term in terms)
+
+
+def experience(title: str) -> str:
+    lowered = title.lower()
+    if contains_term(lowered, ("intern", "internship", "trainee")):
         return "intern"
-    if any(term in lowered for term in ("entry", "associate", "graduate", "junior", "fresher")):
+    if contains_term(lowered, ("entry", "associate", "graduate", "junior", "fresher")):
         return "entry"
-    if any(term in lowered for term in ("senior", "director", "head of", "lead", "vice president", "vp ")):
+    if contains_term(lowered, ("senior", "director", "head of", "lead", "vice president", "vp")):
         return "senior"
-    if any(term in lowered for term in ("manager", "specialist", "consultant")):
+    if contains_term(lowered, ("manager", "specialist", "consultant")):
         return "mid"
     return "unknown"
 
 
 def work_mode(text: str) -> str:
     lowered = text.lower()
-    if "hybrid" in lowered:
+    if contains_term(lowered, ("hybrid",)):
         return "hybrid"
-    if "remote" in lowered or "anywhere" in lowered:
+    if contains_term(lowered, ("remote", "anywhere", "work from home", "wfh")):
         return "remote"
-    if lowered.strip():
+    if contains_term(lowered, ("onsite", "on-site", "on site", "in-office", "in office")):
         return "onsite"
     return "unknown"
 
 
 def employment(value: Any, title: str) -> str:
     lowered = f"{flatten(value)} {title}".lower().replace("-", " ")
-    if "intern" in lowered:
+    if contains_term(lowered, ("intern", "internship")):
         return "internship"
     if "part time" in lowered:
         return "part_time"
@@ -219,8 +223,8 @@ def validate_candidate(candidate: dict[str, Any], generated_at: datetime) -> tup
         "location_text": location,
         "country": country,
         "india_eligible": india,
-        "work_mode": work_mode(location),
-        "experience_level": experience(text),
+        "work_mode": work_mode(f"{title} {location} {summary}"),
+        "experience_level": experience(title),
         "employment_type": employment(candidate.get("employment_type_raw"), title),
         "salary": salary(candidate.get("salary_raw")),
         "posted_at": iso(posted),
@@ -445,3 +449,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
