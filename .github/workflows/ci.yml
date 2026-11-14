@@ -32,3 +32,62 @@ jobs:
       - name: Enforce static asset budget
         run: test $(wc -c < index.html) -lt 102400 && test $(wc -c < styles.css) -lt 102400 && test $(wc -c < app.js) -lt 102400
 
+  browser-fixture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install browser runner
+        run: npm install --no-save playwright@1.56.1 && npx playwright install --with-deps chromium
+      - name: Serve isolated fixture
+        run: |
+          cp tests/fixtures/data/jobs.json data/jobs.json
+          python -m http.server 8765 >/tmp/jobs-radar-http.log 2>&1 &
+      - name: Test mobile and desktop interactions
+        run: node tests/ui_test.mjs
+
+  live-release-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Fetch approved live sources
+        id: fetch
+        continue-on-error: true
+        run: python pipeline/fetch_jobs.py --config pipeline/sources.json --out staging/research_jobs.json --report reports/research_report.json
+      - name: Run automated release judge
+        id: qa
+        if: steps.fetch.outcome == 'success'
+        continue-on-error: true
+        run: python pipeline/validate_jobs.py --in staging/research_jobs.json --out staging/validated_jobs.json --report reports/qa_report.json --rejected reports/rejected_jobs.json --previous data/jobs.json
+      - name: Install browser runner
+        if: steps.qa.outcome == 'success'
+        run: npm install --no-save playwright@1.56.1 && npx playwright install --with-deps chromium
+      - name: Test approved real data
+        if: steps.qa.outcome == 'success'
+        run: |
+          cp staging/validated_jobs.json data/jobs.json
+          python -m http.server 8765 >/tmp/jobs-radar-http.log 2>&1 &
+          node tests/live_ui_test.mjs
+      - name: Upload research and QA artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-release-${{ github.run_id }}
+          path: |
+            reports/*.json
+            staging/research_jobs.json
+            staging/validated_jobs.json
+          if-no-files-found: warn
+      - name: Enforce release decision
+        if: always()
+        run: test '${{ steps.fetch.outcome }}' = success && test '${{ steps.qa.outcome }}' = success
+
