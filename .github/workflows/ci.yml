@@ -42,13 +42,13 @@ jobs:
       - name: Serve isolated fixture
         run: |
           cp tests/fixtures/data/jobs.json data/jobs.json
-          python -m http.server 8765 >/tmp/jobs-radar-http.log 2>&1 &
+          python3 -m http.server 8765 >/tmp/jobs-radar-http.log 2>&1 &
+          for attempt in 1 2 3 4 5; do curl -fsS http://127.0.0.1:8765/ >/dev/null && break; sleep 1; done
       - name: Test mobile and desktop interactions
         run: node tests/ui_test.mjs
 
   live-release-gate:
     runs-on: ubuntu-latest
-    container: mcr.microsoft.com/playwright:v1.56.1-noble
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
@@ -64,15 +64,6 @@ jobs:
         if: steps.fetch.outcome == 'success'
         continue-on-error: true
         run: python pipeline/validate_jobs.py --in staging/research_jobs.json --out staging/validated_jobs.json --report reports/qa_report.json --rejected reports/rejected_jobs.json --previous data/jobs.json
-      - name: Install browser runner
-        if: steps.qa.outcome == 'success'
-        run: npm install --no-save playwright@1.56.1
-      - name: Test approved real data
-        if: steps.qa.outcome == 'success'
-        run: |
-          cp staging/validated_jobs.json data/jobs.json
-          python -m http.server 8765 >/tmp/jobs-radar-http.log 2>&1 &
-          node tests/live_ui_test.mjs
       - name: Upload research and QA artifacts
         if: always()
         uses: actions/upload-artifact@v4
@@ -86,4 +77,18 @@ jobs:
       - name: Enforce release decision
         if: always()
         run: test '${{ steps.fetch.outcome }}' = success && test '${{ steps.qa.outcome }}' = success
+
+  browser-approved-data:
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v1.56.1-noble
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install browser runner
+        run: npm install --no-save playwright@1.56.1
+      - name: Serve approved snapshot
+        run: |
+          python3 -m http.server 8765 >/tmp/jobs-radar-http.log 2>&1 &
+          for attempt in 1 2 3 4 5; do curl -fsS http://127.0.0.1:8765/ >/dev/null && break; sleep 1; done
+      - name: Test approved data at mobile and desktop sizes
+        run: node tests/live_ui_test.mjs
 
