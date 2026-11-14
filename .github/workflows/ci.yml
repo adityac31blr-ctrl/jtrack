@@ -34,13 +34,11 @@ jobs:
 
   browser-fixture:
     runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v1.56.1-noble
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
       - name: Install browser runner
-        run: npm install --no-save playwright@1.56.1 && npx playwright install --with-deps chromium
+        run: npm install --no-save playwright@1.56.1
       - name: Serve isolated fixture
         run: |
           cp tests/fixtures/data/jobs.json data/jobs.json
@@ -50,15 +48,13 @@ jobs:
 
   live-release-gate:
     runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v1.56.1-noble
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
       - name: Fetch approved live sources
         id: fetch
         continue-on-error: true
@@ -70,7 +66,7 @@ jobs:
         run: python pipeline/validate_jobs.py --in staging/research_jobs.json --out staging/validated_jobs.json --report reports/qa_report.json --rejected reports/rejected_jobs.json --previous data/jobs.json
       - name: Install browser runner
         if: steps.qa.outcome == 'success'
-        run: npm install --no-save playwright@1.56.1 && npx playwright install --with-deps chromium
+        run: npm install --no-save playwright@1.56.1
       - name: Test approved real data
         if: steps.qa.outcome == 'success'
         run: |

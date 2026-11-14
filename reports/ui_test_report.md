@@ -19,8 +19,8 @@ The fixture is synthetic and test-only. It must never be copied to production `d
 - JavaScript syntax check: pass
 - Fixture JSON parse: pass
 - HTTP same-origin load: pass
-- Chromium mobile/desktop interaction run: not run in this workspace; Playwright is installed but its Chromium binary is absent, and the browser download endpoint returned HTTP 403
-- Approved real-data integration: pending Data Quality approval, as required by the workflow
+- Chromium mobile/desktop interaction run: pending rerun in the supported Playwright CI container; the first Ubuntu 26.04 runner attempt failed because Playwright 1.56 does not support that host image
+- Approved real-data integration: Data Quality approved 237 live records; the browser smoke test is pending the supported-container rerun
 
 ## Browser suite coverage
 
@@ -28,4 +28,4 @@ The committed Playwright suite checks 360 px and 1280 px viewports, search, zero
 
 ## Known issues
 
-No application defect was found by the completed checks. Publication remains blocked until the orchestrator integrates a Data Quality-approved snapshot and completes the browser suite against that data.
+No application defect was found by the completed checks. The approved snapshot is integrated; first-launch publication remains gated until the browser suite passes and the user approves the launch.

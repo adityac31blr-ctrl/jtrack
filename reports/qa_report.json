@@ -1,71 +1,18 @@
 {
-  "run_id": "2026-11-14T09-42-47Z",
-  "mode": "bootstrap",
-  "reviewed_at": "2026-11-14T09:48:13Z",
-  "decision": "block",
-  "input_records": 0,
-  "accepted_records": 0,
-  "rejected_records": 0,
+  "run_id": "2026-11-14T09-53-49Z",
+  "decision": "pass",
+  "input_records": 269,
+  "accepted_records": 237,
+  "rejected_records": 32,
   "duplicate_records": 0,
-  "warning_records": 0,
-  "source_failures": [
-    {
-      "source_key": "himalayas",
-      "status": "failed",
-      "kind": "network_policy",
-      "detail": "HTTPS CONNECT proxy returned 403 before a provider response was received."
-    }
-  ],
-  "blockers": [
-    {
-      "code": "zero_verifiably_successful_sources",
-      "detail": "No permitted source returned a live provider payload; a zero-job result was not confirmed."
-    },
-    {
-      "code": "ui_integration_not_run",
-      "detail": "Static UI contract checks passed after the frontend arrived, but the Playwright package/browser was unavailable and no approved real-data snapshot exists, so final browser integration and accessibility checks could not run."
-    }
-  ],
-  "warnings": [
-    {
-      "code": "first_launch_human_approval_required",
-      "detail": "Source list, attribution, India eligibility logic, and public deployment require explicit human approval after technical blockers are resolved."
-    }
-  ],
+  "warning_records": 32,
+  "source_failures": [],
+  "blockers": [],
+  "warnings": [],
+  "schema_errors": [],
   "changes_since_previous": {
-    "added": 0,
+    "added": 237,
     "removed": 0
   },
-  "tests": [
-    {
-      "command": "python -m unittest discover -s tests -v",
-      "result": "pass",
-      "tests_run": 7
-    },
-    {
-      "command": "python -m json.tool data/jobs.json",
-      "result": "pass"
-    },
-    {
-      "command": "python -m py_compile pipeline/*.py",
-      "result": "pass"
-    },
-    {
-      "command": "regression review: India eligibility and full snapshot schema",
-      "result": "pass",
-      "reason": "Exact IN/India/Bharat evidence and required top-level/source/stats/job/date/salary validation are implemented and covered by tests."
-    },
-    {
-      "command": "regression review: Himalayas credit and pagination truncation",
-      "result": "pass",
-      "reason": "Source credit falls back to the approved Himalayas attribution URL instead of applicationLink; paging_truncated is set only when the configured final page is nonempty."
-    },
-    {
-      "command": "frontend integration checks",
-      "result": "partial",
-      "reason": "python tests/static_check.py passed; node tests/ui_test.mjs failed before launch because the Playwright package was unavailable; no approved real data exists."
-    }
-  ],
-  "validated_file": "staging/validated_jobs.json",
-  "publication_allowed": false
+  "validated_file": "staging/validated_jobs.json"
 }
